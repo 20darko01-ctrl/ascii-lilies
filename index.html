@@ -1,0 +1,114 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>For Ema</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      overflow: hidden;
+    }
+
+    canvas {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+      cursor: pointer;
+    }
+
+    .message {
+      position: fixed;
+      top: 7%;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      z-index: 10;
+      pointer-events: none;
+      font-family: "Courier New", monospace;
+    }
+
+    .headline {
+      display: inline-block;
+      color: #f3a6d2;
+      font-size: clamp(22px, 4vw, 42px);
+      font-weight: 400;
+      letter-spacing: 0.35em;
+      text-shadow:
+        0 0 5px #ff9bd8,
+        0 0 14px #ff65bd,
+        0 0 28px #ff65bd;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+
+    .headline.visible {
+      opacity: 1;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 0.5em;
+      height: 0.9em;
+      margin-left: 5px;
+      vertical-align: -0.08em;
+      background: #f3a6d2;
+      box-shadow: 0 0 10px #ff65bd;
+      animation: blink 0.8s steps(1) infinite;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="message">
+    <div class="headline" id="headline">
+      <span id="headlineText"></span><span class="cursor" id="cursor"></span>
+    </div>
+  </div>
+
+  <canvas id="screen"></canvas>
+
+  <script src="bouquet.js"></script>
+
+  <script>
+    const headline = document.getElementById("headline");
+    const headlineText = document.getElementById("headlineText");
+    const cursor = document.getElementById("cursor");
+
+    async function startMessage() {
+      await new Promise(resolve => setTimeout(resolve, 1200));
+
+      headline.classList.add("visible");
+
+      for (const letter of "FOR EMA") {
+        headlineText.textContent += letter;
+        await new Promise(resolve => setTimeout(resolve, 180));
+      }
+
+      await new Promise(resolve => setTimeout(resolve, 1800));
+
+      cursor.style.display = "none";
+    }
+
+    startMessage();
+  </script>
+
+</body>
+</html>
+
